@@ -1,95 +1,155 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import { useState, useEffect } from 'react';
+import Link from 'next/link';
+const objects = [
+  { id: 1, src: '/bird1.png' },
+  { id: 2, src: '/car.png' },
+  { id: 3, src: '/love.png' },
+];
+
+const duplicatedObjects = [...objects, ...objects].map((object, index) => ({
+  ...object,
+  id: index + 1,
+}));
+
+const shuffleArray = (array) => {
+  return array.sort(() => Math.random() - 0.5);
+};
 
 export default function Home() {
+  const [cards, setCards] = useState([]);
+  const [flipped, setFlipped] = useState([]);
+  const [matched, setMatched] = useState([]);
+  const [moves, setMoves] = useState(0);
+  const [showBack, setShowBack] = useState(true);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    initializeGame();
+  }, []);
+
+  const initializeGame = () => {
+    setCards(shuffleArray([...duplicatedObjects]));
+    setFlipped([]);
+    setMatched([]);
+    setMoves(0);
+    setShowBack(true);
+    setMessage('');
+
+    const timer = setTimeout(() => {
+      setShowBack(false);
+    }, 5000);
+
+    return () => clearTimeout(timer);
+  };
+
+  const handleFlip = (index) => {
+    if (flipped.length === 2 || flipped.includes(index) || matched.includes(index)) {
+      return;
+    }
+
+    const newFlipped = [...flipped, index];
+    setFlipped(newFlipped);
+
+    if (newFlipped.length === 2) {
+      setMoves(moves + 1);
+      const [first, second] = newFlipped;
+      const cardMatched = cards[first].src === cards[second].src;
+
+      if (cardMatched) {
+        setMatched([...matched, first, second]);
+      }
+
+      setTimeout(() => {
+        if (!cardMatched) {
+          setFlipped([]);
+        } else {
+          setFlipped([]);
+        }
+      }, 1000);
+
+      if (matched.length + 2 === cards.length) {
+        setTimeout(() => {
+          setMessage('¡Victory!');
+        }, 1000);
+      }
+    }
+  };
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <div>
+      <h1>Flip Card Game</h1>
+      
+      <div className="grid">
+        {cards.map((card, index) => (
+          <div
+            key={card.id}
+            className={`card ${flipped.includes(index) || matched.includes(index) ? 'flipped' : ''}`}
+            onClick={() => handleFlip(index)}
           >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
+            <div className={`inner ${flipped.includes(index) || matched.includes(index) ? 'flip' : ''}`}>
+              <div className="back">
+                <img src={card.src} alt="Object" />
+              </div>
+              <div className="front" />
+            </div>
+          </div>
+        ))}
+         
       </div>
+      <div className="div-message">
+      {message && <p className="message">{message}</p>}
+      <p>Moves: {moves}</p>
+      <button onClick={initializeGame}>Play Again</button>
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
       </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <div className="project-github">
+      <p>This project is in </p>
+      <Link href="https://github.com/diegoperea20">
+        <img width="96" height="96" src="https://img.icons8.com/fluency/96/github.png" alt="github"/>
+      </Link>
+    </div>
+      
+      <style jsx>{`
+        .grid {
+          display: grid;
+          grid-template-columns: repeat(3, 100px);
+          grid-gap: 37px;
+          justify-content: center;
+        }
+        .card {
+          width: 100px;
+          height: 100px;
+          perspective: 1000px;
+        }
+        .inner {
+          position: relative;
+          width: 100%;
+          height: 100%;
+          transform-style: preserve-3d;
+          transition: transform 0.6s;
+          transform: rotateY(${showBack ? '180deg' : '0deg'});
+        }
+        .inner.flip {
+          transform: rotateY(180deg);
+        }
+        .front,
+        .back {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          backface-visibility: hidden;
+        }
+        .front {
+          transform: rotateY(0deg);
+          background: url('/card.png') no-repeat center center;
+          background-size: cover;
+        }
+        .back {
+          transform: rotateY(180deg);
+        }
+       
+      `}</style>
+    </div>
   );
 }
