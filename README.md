@@ -20,7 +20,31 @@ Play Again
   <img src="README-images/playagain.PNG" alt="Step4">
 </p>
 
+---
+Personalize Mode
 
+<p align="center">
+  <img src="README-images/modepersonalize.PNG" alt="Step4">
+</p>
+
+Enter the number of pairs from 3 to 9
+
+<p align="center">
+  <img src="README-images/inputpersonalize.PNG" alt="Step4">
+</p>
+
+Play personalize mode
+
+<p align="center">
+  <img src="README-images/gamepersonalize.PNG" alt="Step4">
+</p>
+
+<p align="center">
+  <img src="README-images/victorypersonalize.PNG" alt="Step4">
+</p>
+
+if you want you can go back to normal mode 
+----
 
 Fronted Nextjs Options for do it:
 

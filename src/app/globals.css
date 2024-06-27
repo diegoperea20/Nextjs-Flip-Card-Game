@@ -20,23 +20,21 @@ body {
   padding: 20px;
 }
 
-h1{
+h1 {
   text-align: center;
 }
 
-.project-github{
+.project-github {
   display: grid;
   place-items: center;
 }
 
-.project-github p{
+.project-github p {
   font-weight: bold;
   font-size: 15px;
-  color : white;
+  color: white;
   margin-top: 20px;
 }
-
-
 
 button {
   margin-top: 20px;
@@ -44,29 +42,79 @@ button {
   font-size: 16px;
   cursor: pointer;
   font-weight: bold;
-  background-color: #50d950; /* Color verde claro */
-  color: #1b1b1b; /* Color de texto oscuro para contrastar */
+  background-color: #50d950;
+  color: #1b1b1b;
   border: none;
-  border-radius: 4px; /* Borde redondeado suave */
-  transition: background-color 0.3s ease; /* Transición suave al cambiar de color */
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
-  background-color: #3cb43c; /* Color verde más oscuro al pasar el mouse */
+  background-color: #3cb43c;
 }
-  p {
-    font-weight: bold;
-    font-size: 36px;
-    color: green;
-  }
 
-  .div-message{
-    display: grid;
-    place-items: center;
-  }
+p {
+  font-weight: bold;
+  font-size: 36px;
+  color: green;
+}
 
-  .message{
-    color:#50d950
-  }
+.div-message {
+  display: grid;
+  place-items: center;
+}
 
+.message {
+  color: #50d950;
+}
+
+.personalize {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.personalize label {
+  font-size: 16px;
+}
+
+.personalize input[type="number"] {
+  width: 50px;
+  margin-left: 10px;
+  background-color: #5e5b5b;
+  color: azure;
+  border-radius: 4px;
+  font-size: 20px;
+  text-align: center;
+  outline: none;
+  -webkit-appearance: none;
   
+}
+
+.personalize input[type="number"]::-webkit-outer-spin-button,
+.personalize input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.personalize input[type="file"] {
+  margin-top: 20px;
+  padding: 3px 3px;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  background-color: #50d950;
+  color: #1b1b1b;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+.personalize input[type="file"]::file-selector-button {
+  border-radius: 4px;
+  border: none;
+  color: azure;
+  background-color: #5e5b5b;
+  padding: 5px;
+}
